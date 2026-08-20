@@ -7,6 +7,7 @@
 <script src="https://unpkg.com/marked@12.0.2/marked.min.js"></script>
 <script src="https://unpkg.com/mermaid@11.4.1/dist/mermaid.min.js"></script>
 <style>
+  /* --- Theme tokens --- */
   :root {
     color-scheme: light;
     --surface-1: #fcfcfb;
@@ -25,7 +26,6 @@
       --text-secondary: #c3c2b7;
       --text-muted: #898781;
       --border: rgba(255,255,255,0.10);
-      --status-good: #0ca30c;
     }
   }
   :root[data-theme="dark"] {
@@ -37,6 +37,8 @@
     --text-muted: #898781;
     --border: rgba(255,255,255,0.10);
   }
+
+  /* --- Base / reset --- */
   * { box-sizing: border-box; }
   html, body {
     margin: 0; padding: 0;
@@ -44,6 +46,8 @@
     color: var(--text-primary);
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   }
+
+  /* --- Header & nav --- */
   header {
     position: sticky; top: 0; z-index: 5;
     background: var(--page);
@@ -98,7 +102,11 @@
     border: 1px solid var(--border); border-radius: 6px;
     background: var(--surface-1); color: var(--text-primary);
   }
+
+  /* --- Main layout --- */
   main { padding: 8px 24px 48px; max-width: 1400px; margin: 0 auto; }
+
+  /* --- Cluster & card --- */
   section.cluster { margin-top: 32px; scroll-margin-top: 130px; }
   section.cluster .cluster-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
   section.cluster .cluster-head .swatch { width: 12px; height: 12px; border-radius: 3px; background: var(--c); flex: 0 0 auto; }
@@ -149,6 +157,8 @@
   .disclaimer strong { display: block; font-size: 14px; color: var(--text-primary); margin-bottom: 6px; }
   .disclaimer p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin: 0 0 10px; }
   .disclaimer p:last-child { margin-bottom: 0; }
+
+  /* --- Modal (base + compact) --- */
   .modal-overlay {
     position: fixed; inset: 0; background: rgba(0,0,0,0.5);
     display: flex; align-items: center; justify-content: center;
