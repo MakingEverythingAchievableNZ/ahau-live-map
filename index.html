@@ -68,14 +68,6 @@
     border: 1px solid var(--border); border-radius: 6px;
     background: var(--surface-1); color: var(--text-primary);
   }
-  .chip {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 5px 10px; font-size: 12.5px; border-radius: 999px;
-    border: 1px solid var(--border); background: var(--surface-1);
-    color: var(--text-secondary); cursor: pointer; user-select: none;
-  }
-  .chip.off { opacity: 0.45; }
-  .chip .swatch { width: 9px; height: 9px; border-radius: 50%; background: var(--c); flex: 0 0 auto; }
   main { padding: 8px 24px 48px; max-width: 1400px; margin: 0 auto; }
   section.cluster { margin-top: 32px; }
   section.cluster .cluster-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
@@ -190,7 +182,6 @@
   </div>
   <div class="controls">
     <input type="search" id="search" placeholder="Search by name…">
-    <span id="chips"></span>
   </div>
 </header>
 <main>
@@ -239,11 +230,9 @@ DATA.nodes.forEach(n => nodeById[n.id] = n);
 
 function clusterColor(c) { return isDark() ? c.colorDark : c.colorLight; }
 
-const activeClusters = new Set(DATA.clusters.map(c => c.name));
 let searchTerm = '';
 
 const clustersEl = document.getElementById('clusters');
-const chipsEl = document.getElementById('chips');
 const emptyEl = document.getElementById('empty-state');
 
 const TALKS_TO_COLLAPSE_AT = 3;
@@ -290,32 +279,13 @@ function renderClusters() {
   });
 }
 
-function renderChips() {
-  chipsEl.innerHTML = '';
-  DATA.clusters.forEach(c => {
-    const chip = document.createElement('span');
-    chip.className = 'chip';
-    chip.dataset.cluster = c.name;
-    chip.innerHTML = `<span class="swatch" style="--c:${clusterColor(c)}"></span>${c.name}`;
-    chip.addEventListener('click', () => {
-      if (activeClusters.has(c.name)) activeClusters.delete(c.name);
-      else activeClusters.add(c.name);
-      chip.classList.toggle('off', !activeClusters.has(c.name));
-      applyFilters();
-    });
-    chipsEl.appendChild(chip);
-  });
-}
-
 function applyFilters() {
   let anyVisible = false;
   document.querySelectorAll('section.cluster').forEach(section => {
-    const clusterOk = activeClusters.has(section.dataset.cluster);
     let anyCardVisible = false;
     section.querySelectorAll('.card').forEach(card => {
       const n = nodeById[card.dataset.id];
-      const searchOk = !searchTerm || n.label.toLowerCase().includes(searchTerm) || n.plainSummary.toLowerCase().includes(searchTerm);
-      const visible = clusterOk && searchOk;
+      const visible = !searchTerm || n.label.toLowerCase().includes(searchTerm) || n.plainSummary.toLowerCase().includes(searchTerm);
       card.style.display = visible ? '' : 'none';
       if (visible) anyCardVisible = true;
     });
@@ -351,7 +321,6 @@ clustersEl.addEventListener('click', e => {
 });
 
 renderClusters();
-renderChips();
 
 // --- Doc modal (shared by architecture doc + plain-language summary) ---
 (function () {
