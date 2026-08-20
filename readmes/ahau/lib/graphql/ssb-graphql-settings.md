@@ -1,0 +1,1 @@
+This is the small translation piece that lets an app ask questions about app settings — like "what are this group's current settings?" — and get an answer back, by connecting those questions through to the settings record-keeper.

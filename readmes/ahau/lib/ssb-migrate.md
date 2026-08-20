@@ -1,0 +1,1 @@
+When the way information is stored needs to change — say, a new kind of record is introduced — this piece keeps a checklist of those updates and quietly applies whichever ones a given copy of the system hasn't run yet, so everyone's data ends up in the same shape without anything being lost or applied twice.

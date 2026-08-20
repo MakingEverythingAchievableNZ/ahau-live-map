@@ -17,9 +17,19 @@ actively each one is maintained. Captured 20 August 2026.
 - **`ARCHITECTURE.md`** — the full technical write-up: SSB concepts as used in this
   codebase, every cluster of repos, and the evidence behind its findings.
 - **`PLAIN-SUMMARY.md`** — the non-technical one-pager, no jargon, no repo names.
+- **`readmes/`** — a plain-language rewrite of each repo's own README (one file per
+  repo, path mirrors the repo id, e.g. `readmes/ahau/lib/ssb-crut.md`), shown in
+  `index.html`'s "Learn more" modal.
 
 Both HTML pages are fully self-contained (data and docs inlined, no server needed) — open
 either one straight from disk in a browser, no build step required.
+
+## Editing a "Learn more" README
+
+Edit the relevant file under `readmes/`, then run `node scripts/sync-readmes.js` to bake
+it back into `index.html`. That script has no dependencies (plain Node `fs`), so no
+`npm install` is needed — it just rewrites the embedded `README_MAP` object from whatever
+`.md` files currently exist under `readmes/`.
 
 ## Hosting
 

@@ -1,0 +1,1 @@
+This is the generic engine that all the "translation layer" pieces plug into. It doesn't know anything about family trees or profiles itself — it just takes a set of question-answering rules from those other pieces, combines them, and starts up the connection that the app talks to when it asks a question.

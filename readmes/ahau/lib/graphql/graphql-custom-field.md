@@ -1,0 +1,1 @@
+A small technical helper that lets a single piece of information hold more than one type of value — for example, a "year of birth" that's a number, or a "nicknames" that's a list of words, using the same underlying field.

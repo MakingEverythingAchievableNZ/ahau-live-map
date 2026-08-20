@@ -1,0 +1,1 @@
+A small helper for converting family-tree information to and from spreadsheet (CSV) files, so it can be moved in or out of Āhau using a tool like Excel. It isn't currently wired up to anything else in the system.

@@ -1,0 +1,1 @@
+This lets an app ask basic questions about the health of the computer it's running on — how busy the processor is, how much memory and disk space is being used, and network activity. It's mostly useful for keeping an eye on a Pātaka, since that's the piece expected to run unattended for long periods.

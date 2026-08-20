@@ -1,0 +1,3 @@
+This is what lets a story get attached to a profile — a memory, photo, document, or piece of knowledge passed down about a person or place. A story can carry details like when and where it happened, what format it's in (a photo, an audio recording, a written account), who told it, and who's allowed to see it, since a story can be kept fully private or shared only with chosen people.
+
+Related stories can also be grouped together into named collections, and more than one person can contribute to or edit the same story over time — useful when different whanau members each know part of the same history.

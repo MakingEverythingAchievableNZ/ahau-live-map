@@ -1,0 +1,1 @@
+This is a tool developers use to start up a working copy of Āhau's backend without needing the full desktop app — mainly so they can test things quickly, or run a copy of the service somewhere in the cloud. As of this README it has a known gap: its admin page isn't protected by a login yet, which is flagged as something still to be fixed.

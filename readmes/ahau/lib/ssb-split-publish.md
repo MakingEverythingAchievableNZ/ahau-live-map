@@ -1,0 +1,1 @@
+The underlying network has a hard 8kb size limit on any single record. This piece works around that limit by automatically breaking anything larger into smaller chunks, publishing them one after another, and stitching them back together as one record when it's read. If a piece is still too big even after splitting, it just keeps splitting further until every chunk fits.

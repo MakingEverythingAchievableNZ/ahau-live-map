@@ -1,0 +1,3 @@
+This is where photos, audio, documents, and other files actually live and get shared between peers, encrypted so only the right people can read them. Each person keeps their own local copy of their files, and this piece handles finding, connecting to, and syncing copies with other people's devices over the peer-to-peer network — no central server involved.
+
+A Pātaka (the always-on backup helper described elsewhere in this map) uses this same piece slightly differently: instead of keeping just its own files, it keeps a full backup copy of everyone it's helping, so their files are still available even when their own device is offline.

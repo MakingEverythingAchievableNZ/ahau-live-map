@@ -1,0 +1,5 @@
+This piece manages every profile in the system — a person, a whanau or community group, or a Pātaka — and controls who's allowed to see what.
+
+Each profile actually exists at several layers of privacy at once: a fully public version with just a name and photo, a version shared only within a private group with much more detail (like contact details, birth and death information, education), and an admin-only version for the most sensitive notes. Communities can also define their own custom fields to collect information specific to their whanau or group, like a joining questionnaire for new members. Deleted information isn't wiped, either — it's marked as "retired" rather than erased, so there's always a record of what changed and when.
+
+Because people can make changes while offline and reconnect later, it's possible for two people to edit the same profile at the same time without knowing about it. When that happens, this piece works out the most likely correct version automatically. Fully merging conflicting edits together is still a work in progress.

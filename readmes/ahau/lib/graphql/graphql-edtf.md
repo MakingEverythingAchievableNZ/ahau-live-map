@@ -1,0 +1,1 @@
+A small technical helper that lets dates be recorded even when they're uncertain or only partly known — like "sometime in the 1990s" or "around 1995" — instead of forcing every date into an exact day, month, and year.

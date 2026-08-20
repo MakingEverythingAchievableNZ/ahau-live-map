@@ -1,0 +1,3 @@
+This is the piece that actually plugs the file-storage system into a running Āhau or Pātaka, so photos and documents can be saved, shared with other peers, and fetched back again on request. When a device doesn't have a file locally, this is what fetches it from someone else who does.
+
+When Pātaka is running in its always-on "backup" role, it keeps full copies of files for everyone it's backing up, but deliberately isn't given the encryption keys to open them — so it can store and pass along people's photos and documents without ever being able to see what's in them. It can also be set to automatically clear out old, rarely-used files from other people's backups once storage starts filling up, to keep space free.

@@ -1,0 +1,1 @@
+This is the piece of the translation layer that understands questions specifically about Pātaka — such as a quick summary of how much family-tree data a Pātaka is holding — and knows how to fetch the answers.

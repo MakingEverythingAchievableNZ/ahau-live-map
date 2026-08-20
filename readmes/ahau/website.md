@@ -1,0 +1,1 @@
+This is the public website where people can learn about Āhau and get in touch — the one most visitors will actually see, rather than the app itself. It was originally designed in Webflow (a visual website builder) and exported into code, with a small mail-sending feature added on top so the contact form works.

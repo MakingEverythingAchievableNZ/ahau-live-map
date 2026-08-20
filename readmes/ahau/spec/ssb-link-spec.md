@@ -1,0 +1,3 @@
+This document explains a design decision: rather than a relationship — say, between a story and a photo, or between two family members — being buried as a plain reference inside one of the records, it's stored as its own separate, independent record called a "link".
+
+Doing it this way means a link can carry its own extra detail, and can be commented on or vouched for without worrying that one end of it might quietly change later. It also means each side of a link keeps its own privacy settings. The document works through the trickier cases this creates — like what to do when one side of a link is public and the other is private — so that a link never accidentally reveals more than it should about a private record or group.

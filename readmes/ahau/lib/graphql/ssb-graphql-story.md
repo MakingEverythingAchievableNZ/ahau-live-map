@@ -1,0 +1,1 @@
+This is the piece of the translation layer that understands questions about stories — the memories and knowledge people attach to a profile — and knows how to fetch the answers, by working together with the piece that actually stores stories.

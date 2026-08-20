@@ -1,0 +1,1 @@
+This is the small connector every screen in every Āhau app uses to send a question to the system and get an answer back — for example, "show me this person's family tree." It doesn't hold any information itself; it just handles the conversation between the app's screens and the engine that knows how to answer.

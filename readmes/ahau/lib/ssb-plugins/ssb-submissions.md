@@ -1,0 +1,3 @@
+This piece handles the "propose, then approve" side of submitted information. When someone submits a suggested new record, or a suggested change to an existing one — say, a relative filling in details on a whanau member's behalf — it's stored as a proposal rather than applied straight away, with room for a comment explaining it. Someone with the right permissions can then approve or reject it, and only once approved does it actually become part of the person's record.
+
+Because people can be offline when they respond, it's possible for two people to approve or reject the same proposal without knowing the other has responded — the system is built to cope with that kind of disagreement rather than assume everyone always sees the same thing at the same time.

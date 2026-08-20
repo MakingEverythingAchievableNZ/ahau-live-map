@@ -1,0 +1,1 @@
+This wires together everything Pātaka needs to run as a service, including an optional web page where new members can register to join a whanau or community group by filling in a form online, rather than needing to be invited in person with a code.
