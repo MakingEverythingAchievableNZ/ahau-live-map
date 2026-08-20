@@ -99,7 +99,11 @@
   .status-badge.unmaintained { border-color: var(--text-muted); color: var(--text-muted); border-style: dashed; }
   .card p.desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0 0 10px; }
   .card p.desc.placeholder { color: var(--text-muted); font-style: italic; }
-  .card .talks-to { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+  .card .talks-to {
+    font-size: 12px; color: var(--text-secondary); line-height: 1.6;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+  }
+  .card .talks-to:hover { white-space: normal; overflow: visible; text-overflow: clip; }
   .card .talks-to b { color: var(--text-primary); font-weight: 600; }
   .card .talks-to a { color: var(--text-secondary); text-decoration: none; border-bottom: 1px dotted var(--text-muted); }
   .card .talks-to a:hover { color: var(--text-primary); }
