@@ -51,10 +51,10 @@
     padding: 20px 24px 16px;
   }
   h1 { font-size: 20px; margin: 0 0 6px; }
+  .site-links { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 8px; }
   .site-link {
     font-size: 12px; font-weight: 500; color: var(--text-muted);
     text-decoration: none; border-bottom: 1px dotted var(--text-muted);
-    vertical-align: middle; margin-left: 6px;
   }
   .site-link:hover { color: var(--text-primary); border-color: var(--text-primary); }
   .subtitle { font-size: 13.5px; color: var(--text-secondary); margin: 0 0 12px; line-height: 1.5; max-width: 62ch; }
@@ -221,7 +221,11 @@
 <header>
   <div class="header-top">
     <div>
-      <h1>Āhau under the hood <a href="https://ahau.io" class="site-link" target="_blank" rel="noopener noreferrer">ahau.io ↗</a> <a href="https://gitlab.com/ahau/ahau" class="site-link" target="_blank" rel="noopener noreferrer">GitLab ↗</a></h1>
+      <h1>Āhau under the hood</h1>
+      <p class="site-links">
+        <a href="https://ahau.io" class="site-link" target="_blank" rel="noopener noreferrer">ahau.io ↗</a>
+        <a href="https://gitlab.com/ahau/ahau" class="site-link" target="_blank" rel="noopener noreferrer">GitLab ↗</a>
+      </p>
       <p class="subtitle">A friendly map of what each piece of the Āhau system is and does.</p>
     </div>
     <button id="menu-toggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="header-collapsible">
