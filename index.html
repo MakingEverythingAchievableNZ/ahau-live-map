@@ -15,7 +15,6 @@
     --text-secondary: #52514e;
     --text-muted: #898781;
     --border: rgba(11,11,11,0.10);
-    --status-good: #0ca30c;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -37,7 +36,6 @@
     --text-secondary: #c3c2b7;
     --text-muted: #898781;
     --border: rgba(255,255,255,0.10);
-    --status-good: #0ca30c;
   }
   * { box-sizing: border-box; }
   html, body {
@@ -94,9 +92,6 @@
   }
   .card.jump-highlight { outline: 2px solid var(--c); }
   .card h3 { font-size: 14.5px; margin: 0 0 6px; }
-  .status-badge { display: inline-block; font-size: 10.5px; padding: 1px 7px; border-radius: 10px; border: 1px solid var(--status-good); color: var(--status-good); margin-bottom: 8px; cursor: help; }
-  .status-badge.maintained { border-color: var(--text-secondary); color: var(--text-secondary); }
-  .status-badge.unmaintained { border-color: var(--text-muted); color: var(--text-muted); border-style: dashed; }
   .card p.desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin: 0 0 10px; }
   .card p.desc.placeholder { color: var(--text-muted); font-style: italic; }
   .card .talks-to {
@@ -262,16 +257,6 @@ function talksToLine(label, list) {
     + `<button type="button" class="talks-to-toggle" aria-expanded="false" data-more="+${hiddenCount} more" data-less="show less">+${hiddenCount} more</button></div>`;
 }
 
-const STATUS_META = {
-  'in-development': { label: 'In development', hint: "Being actively worked on right now." },
-  'maintained': { label: 'Maintained', hint: "Has a real history of past work. It's stable, not currently being changed — that's expected, not a problem." },
-  'unmaintained': { label: 'Unmaintained', hint: 'No recorded development work on this piece.' },
-};
-function statusBadge(status) {
-  const meta = STATUS_META[status] || { label: status, hint: '' };
-  return `<span class="status-badge ${status}" title="${meta.hint}">${meta.label}</span>`;
-}
-
 function renderClusters() {
   clustersEl.innerHTML = '';
   DATA.clusters.forEach(c => {
@@ -289,7 +274,6 @@ function renderClusters() {
       <div class="card-grid">
         ${clusterNodes.map(n => `
           <div class="card" id="node-${n.id.replace(/[^a-zA-Z0-9]/g, '-')}" data-id="${n.id}" style="--c:${clusterColor(c)}">
-            ${statusBadge(n.status)}
             <h3>${n.label}</h3>
             <p class="desc${n.hasSummary ? '' : ' placeholder'}">${n.plainSummary}</p>
             ${n.hasReadme ? `<button class="learn-more" data-readme="${n.id}" data-label="${n.label}">Learn more →</button>` : ''}
