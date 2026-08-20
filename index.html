@@ -52,6 +52,15 @@
   }
   h1 { font-size: 20px; margin: 0 0 6px; }
   .subtitle { font-size: 13.5px; color: var(--text-secondary); margin: 0 0 12px; line-height: 1.5; max-width: 62ch; }
+  .header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .menu-toggle {
+    display: none; align-items: center; gap: 6px; flex: 0 0 auto;
+    padding: 7px 12px; font-size: 13px; font-weight: 500;
+    border: 1px solid var(--border); border-radius: 7px;
+    background: var(--surface-1); color: var(--text-primary);
+    cursor: pointer;
+  }
+  .menu-toggle:hover { border-color: var(--text-secondary); }
   .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
   .nav-btn {
     display: inline-flex; align-items: center; gap: 6px;
@@ -62,14 +71,29 @@
   }
   .nav-btn:hover { border-color: var(--text-secondary); }
   .nav-btn .arrow { color: var(--text-muted); }
+  .section-nav { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+  .section-nav-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 10px; font-size: 12px; font-weight: 500;
+    border: 1px solid var(--border); border-radius: 999px;
+    background: var(--surface-1); color: var(--text-secondary);
+    text-decoration: none; cursor: pointer;
+  }
+  .section-nav-link:hover { color: var(--text-primary); border-color: var(--text-secondary); }
+  .section-nav-link .swatch { width: 8px; height: 8px; border-radius: 50%; background: var(--c); flex: 0 0 auto; }
   .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  @media (max-width: 768px) {
+    .menu-toggle { display: inline-flex; }
+    .header-collapsible { display: none; }
+    .header-collapsible.open { display: block; }
+  }
   input[type="search"] {
     padding: 7px 10px; font-size: 13px; min-width: 220px;
     border: 1px solid var(--border); border-radius: 6px;
     background: var(--surface-1); color: var(--text-primary);
   }
   main { padding: 8px 24px 48px; max-width: 1400px; margin: 0 auto; }
-  section.cluster { margin-top: 32px; }
+  section.cluster { margin-top: 32px; scroll-margin-top: 130px; }
   section.cluster .cluster-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
   section.cluster .cluster-head .swatch { width: 12px; height: 12px; border-radius: 3px; background: var(--c); flex: 0 0 auto; }
   section.cluster h2 { font-size: 15.5px; margin: 0; }
@@ -80,7 +104,7 @@
   .card {
     background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px;
     padding: 14px 16px; border-left: 4px solid var(--c);
-    scroll-margin-top: 90px;
+    scroll-margin-top: 130px;
   }
   .card.jump-highlight { outline: 2px solid var(--c); }
   .card h3 { font-size: 14.5px; margin: 0 0 6px; }
@@ -173,15 +197,25 @@
 </head>
 <body>
 <header>
-  <h1>Āhau under the hood</h1>
-  <p class="subtitle">A friendly map of what each piece of the Āhau system is and does.</p>
-  <div class="nav-buttons">
-    <a href="#" class="nav-btn" data-open-doc="summary">About<span class="arrow">→</span></a>
-    <a href="graph.html" class="nav-btn">Interactive Graph<span class="arrow">→</span></a>
-    <a href="#" class="nav-btn" data-open-doc="architecture">Architecture In-Depth<span class="arrow">→</span></a>
+  <div class="header-top">
+    <div>
+      <h1>Āhau under the hood</h1>
+      <p class="subtitle">A friendly map of what each piece of the Āhau system is and does.</p>
+    </div>
+    <button id="menu-toggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="header-collapsible">
+      <span class="menu-toggle-icon">☰</span> Menu
+    </button>
   </div>
-  <div class="controls">
-    <input type="search" id="search" placeholder="Search by name…">
+  <div id="header-collapsible" class="header-collapsible">
+    <div class="nav-buttons">
+      <a href="#" class="nav-btn" data-open-doc="summary">About<span class="arrow">→</span></a>
+      <a href="graph.html" class="nav-btn">Interactive Graph<span class="arrow">→</span></a>
+      <a href="#" class="nav-btn" data-open-doc="architecture">Architecture In-Depth<span class="arrow">→</span></a>
+    </div>
+    <nav id="section-nav" class="section-nav" aria-label="Jump to section"></nav>
+    <div class="controls">
+      <input type="search" id="search" placeholder="Search by name…">
+    </div>
   </div>
 </header>
 <main>
@@ -229,11 +263,17 @@ const nodeById = {};
 DATA.nodes.forEach(n => nodeById[n.id] = n);
 
 function clusterColor(c) { return isDark() ? c.colorDark : c.colorLight; }
+function slugify(text) {
+  return text.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-');
+}
 
 let searchTerm = '';
 
 const clustersEl = document.getElementById('clusters');
 const emptyEl = document.getElementById('empty-state');
+const sectionNavEl = document.getElementById('section-nav');
+const headerCollapsibleEl = document.getElementById('header-collapsible');
+const menuToggleEl = document.getElementById('menu-toggle');
 
 const TALKS_TO_COLLAPSE_AT = 3;
 function talksToLine(label, list) {
@@ -255,6 +295,7 @@ function renderClusters() {
     const clusterNodes = DATA.nodes.filter(n => n.cluster === c.name);
     const section = document.createElement('section');
     section.className = 'cluster';
+    section.id = 'cluster-' + slugify(c.name);
     section.dataset.cluster = c.name;
     section.innerHTML = `
       <div class="cluster-head">
@@ -279,6 +320,14 @@ function renderClusters() {
   });
 }
 
+function renderSectionNav() {
+  sectionNavEl.innerHTML = DATA.clusters.map(c => `
+    <a href="#cluster-${slugify(c.name)}" class="section-nav-link">
+      <span class="swatch" style="--c:${clusterColor(c)}"></span>${c.friendlyTitle}
+    </a>
+  `).join('');
+}
+
 function applyFilters() {
   let anyVisible = false;
   document.querySelectorAll('section.cluster').forEach(section => {
@@ -298,6 +347,25 @@ function applyFilters() {
 document.getElementById('search').addEventListener('input', e => {
   searchTerm = e.target.value.trim().toLowerCase();
   applyFilters();
+});
+
+function setMenuOpen(open) {
+  headerCollapsibleEl.classList.toggle('open', open);
+  menuToggleEl.setAttribute('aria-expanded', String(open));
+}
+menuToggleEl.addEventListener('click', () => {
+  setMenuOpen(!headerCollapsibleEl.classList.contains('open'));
+});
+sectionNavEl.addEventListener('click', e => {
+  const link = e.target.closest('a');
+  if (!link) return;
+  e.preventDefault();
+  const target = document.getElementById(link.getAttribute('href').slice(1));
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setMenuOpen(false);
+});
+headerCollapsibleEl.addEventListener('click', e => {
+  if (e.target.closest('.nav-btn')) setMenuOpen(false);
 });
 
 clustersEl.addEventListener('click', e => {
@@ -321,6 +389,7 @@ clustersEl.addEventListener('click', e => {
 });
 
 renderClusters();
+renderSectionNav();
 
 // --- Doc modal (shared by architecture doc + plain-language summary) ---
 (function () {
