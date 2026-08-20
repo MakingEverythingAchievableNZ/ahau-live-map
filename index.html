@@ -168,6 +168,16 @@
     padding: 14px 20px; border-bottom: 1px solid var(--border); flex: 0 0 auto;
   }
   .modal-header h2 { margin: 0; font-size: 16px; text-transform: none; letter-spacing: normal; color: var(--text-primary); }
+  .modal-header-actions { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .modal-toc-toggle {
+    display: none; align-items: center; gap: 4px;
+    padding: 5px 10px; font-size: 12px; font-weight: 500;
+    border: 1px solid var(--border); border-radius: 7px;
+    background: var(--surface-1); color: var(--text-primary);
+    cursor: pointer;
+  }
+  .modal-toc-toggle:hover { border-color: var(--text-secondary); }
+  .modal.compact .modal-toc-toggle { display: none; }
   .modal-close {
     background: none; border: none; font-size: 22px; line-height: 1;
     color: var(--text-secondary); cursor: pointer; padding: 4px 10px; border-radius: 6px;
@@ -199,6 +209,12 @@
   .modal-content a { color: var(--text-primary); }
   .modal-content blockquote { margin: 10px 0; padding: 4px 14px; border-left: 3px solid var(--border); color: var(--text-muted); }
   .modal-content .mermaid { margin: 16px 0; text-align: center; overflow-x: auto; }
+  @media (max-width: 768px) {
+    .modal-toc-toggle { display: inline-flex; }
+    .modal-body { flex-direction: column; }
+    .modal-toc { display: none; width: auto; max-height: 40vh; border-right: none; border-bottom: 1px solid var(--border); }
+    .modal-toc.open { display: block; }
+  }
 </style>
 </head>
 <body>
@@ -242,7 +258,10 @@
   <div class="modal" role="dialog" aria-modal="true" aria-label="Āhau documentation">
     <div class="modal-header">
       <h2 id="doc-modal-title">Āhau documentation</h2>
-      <button id="doc-modal-close" class="modal-close" aria-label="Close">×</button>
+      <div class="modal-header-actions">
+        <button id="doc-toc-toggle" class="modal-toc-toggle" type="button" aria-expanded="false" aria-controls="doc-toc">Contents</button>
+        <button id="doc-modal-close" class="modal-close" aria-label="Close">×</button>
+      </div>
     </div>
     <div class="modal-body">
       <nav id="doc-toc" class="modal-toc"></nav>
@@ -405,6 +424,7 @@ renderSectionNav();
   const closeBtn = document.getElementById('doc-modal-close');
   const contentEl = document.getElementById('doc-content');
   const tocEl = document.getElementById('doc-toc');
+  const tocToggleEl = document.getElementById('doc-toc-toggle');
 
   const DOCS = {
     architecture: { title: 'Āhau System Architecture', md: ARCHITECTURE_MD, rendered: false },
@@ -481,11 +501,17 @@ renderSectionNav();
     contentEl.innerHTML = doc.html;
     tocEl.innerHTML = doc.toc;
     modalEl.classList.toggle('compact', !!doc.compact);
+    tocEl.classList.remove('open');
+    tocToggleEl.setAttribute('aria-expanded', 'false');
   }
   function closeModal() {
     overlay.hidden = true;
     document.body.style.overflow = '';
   }
+  tocToggleEl.addEventListener('click', () => {
+    const open = tocEl.classList.toggle('open');
+    tocToggleEl.setAttribute('aria-expanded', String(open));
+  });
 
   document.querySelectorAll('[data-open-doc]').forEach(trigger => {
     trigger.addEventListener('click', e => { e.preventDefault(); openModal(trigger.dataset.openDoc); });
