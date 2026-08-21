@@ -1,18 +1,21 @@
-# Āhau - under the hood 
+# Āhau — under the hood
 
 Āhau is a family-tree (whakapapa) app that works peer-to-peer — it doesn't
 depend on a central company's server to keep working.
 
 Think of the Āhau app as a single screen on your phone or computer. Behind
-that screen, it talks to dozens of smaller building blocks, often called
-plugins or packages. Each time you do something, like open a family tree or
-save a photo, the app passes the request through a chain of these pieces to
-get it done. That's why there are 61 separate pieces of code behind one app.
+that screen, it talks to about three dozen smaller building blocks, often
+called plugins or packages, all living together in one shared codebase. Each
+time you do something, like open a family tree or save a photo, the app
+passes the request through a chain of these pieces to get it done. That's
+why there's so much behind one app — even though, as of August 2026, it's
+all one codebase instead of dozens of separate ones.
 
-This page explains, without jargon or a wall of repo names, what those
+This page explains, without jargon or a wall of package names, what those
 groups of pieces do. For a browsable, searchable card for every individual
-piece, see `index.html`. For the full technical picture, see
-`ARCHITECTURE.md` and the interactive `graph.html`.
+piece, see `index.html` — including a step-by-step walk through what
+actually happens when you tap something in the app. For the full technical
+picture, see `ARCHITECTURE.md` and the interactive `graph.html`.
 
 ## What is Scuttlebutt, and why was Āhau built with it?
 
@@ -48,13 +51,7 @@ pieces behind one app.
 
 The family-tree app that whanau use on a phone or computer (**Āhau**), plus
 an always-on helper (**Pātaka**) that keeps backups running even when
-you're offline, and the public website.
-
-## The foundational plumbing (Core SSB plumbing)
-
-The foundational plumbing that makes any kind of record-keeping possible on
-this peer-to-peer network — storing files, managing edit history, handling
-encryption keys.
+you're offline.
 
 ## The parts that know what a family tree is (Domain SSB plugins)
 
@@ -62,39 +59,28 @@ The parts of the system that know what a family tree, a person's profile, or
 a story actually is, including the piece that records who's related to whom
 and turns those links into a family tree you can explore.
 
+## The foundational plumbing (Core data & storage layer)
+
+The foundational plumbing that makes any kind of record-keeping possible on
+this peer-to-peer network — storing files, managing edit history, handling
+encryption keys, and enforcing who's allowed to see what.
+
 ## The translation layer (GraphQL layer)
 
 The translation layer that lets the app's screens ask questions like "show
 me this person's family tree" and get an answer back.
 
-## Behind-the-scenes developer tools (CLI / tooling utilities)
+## What changed in August 2026
 
-Behind-the-scenes tools developers use to run test instances, move data
-around, or build desktop icons — not something an end user ever touches
-directly.
+Until 19 August 2026, all of the above lived in 61 separate repositories.
+They've since been consolidated into a single shared codebase (a
+"monorepo") — same pieces, same boundaries between them, just no longer
+scattered across dozens of places to check out and version separately. The
+old buckets for **unfinished experiments** and **written-only specs** that
+used to sit alongside the working code didn't come along for that move —
+what's mapped here is all live, imported code.
 
-## Unfinished experiments (Prototypes / dead code)
-
-Unfinished experiments the team tried and set aside — safe to ignore unless
-you're specifically picking up one of those threads again.
-
-## Written explanations (Specs / docs)
-
-Written explanations of how the system is meant to work, for humans to read
-rather than code to run.
-
-## How active is development, overall?
-
-Every piece falls into one of three states, not just "on" or "off":
-
-- **In development** — being actively worked on right now. Only a handful of
-  pieces are here: the main app, its documentation site, the backup helper,
-  and the two plugins that connect them to the rest of the system.
-- **Maintained** — has a real history of past work, but is stable and not
-  currently being changed. This is most of the system, and it's expected,
-  not a warning sign.
-- **Unmaintained** — no recorded development work at all. About a third of
-  the 61 pieces fall here.
-
-This reflects a deliberate shift from active building to steady maintenance,
-not a system that's been abandoned.
+One rough edge from the move is still open: the Āhau desktop app is pinned
+to an older version of its own core plugin because there isn't yet a test
+suite to safely verify a bump, and that's currently why the app's dev
+server won't start. That's a known, tracked issue, not something hidden.

@@ -1,1 +1,0 @@
-This generates fake but realistic-looking sample data — profiles and family-tree connections — so developers can build and test the app without needing to use any real person's information. It can automatically build a whole made-up family tree of whatever size is needed for testing.

@@ -1,1 +1,0 @@
-A small demo page built to test uploading a file to the file-storage system and displaying it back in a browser. It was a one-off way to check that stored files could be shown properly, not a piece that's part of the running app.

@@ -1,1 +1,0 @@
-A draft proposal for how the family-tree screen should keep track of what's currently on view — things like which person is in focus, and where each person's box should be drawn on screen. It's an idea for organising that internal bookkeeping more cleanly, marked as a draft from the start, and it doesn't describe how the app actually works today.
